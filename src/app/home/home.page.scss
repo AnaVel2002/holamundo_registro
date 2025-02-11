@@ -1,27 +1,56 @@
 #container {
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-top: 10%;
+  color: #4e342e; /* Tono café oscuro */
 }
 
 #container strong {
-  font-size: 20px;
-  line-height: 26px;
+  font-size: 22px;
+  line-height: 28px;
+  color: #3e2723; /* Café aún más oscuro para resaltar */
+  font-weight: bold;
 }
 
 #container p {
   font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
+  line-height: 24px;
+  color: #795548; /* Tono café medio */
   margin: 0;
 }
 
 #container a {
   text-decoration: none;
+  color: #6d4c41; /* Tono café con un poco de calidez */
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+#container a:hover {
+  color: #5d4037; /* Oscurecer el tono al pasar el cursor */
+}
+
+.info-box {
+  border: 1px solid #8d6e63; /* Café neutro para el borde */
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 5%;
+  margin-left: auto; /* Centrar automáticamente */
+  margin-right: auto; /* Centrar automáticamente */
+  width: 60%; /* Ajustar el tamaño */
+  background-color: #efebe9; /* Tono café muy claro para el fondo */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves para un diseño moderno */
+}
+
+.info {
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-top: 16px;
+  margin-left: auto; /* Centrar automáticamente */
+  margin-right: auto; /* Centrar automáticamente */
+  width: 50%; /* Ajustar el tamaño */
+  background-color: #d7ccc8; /* Tono café claro */
+  color: #4e342e; /* Texto en café oscuro */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
 }
