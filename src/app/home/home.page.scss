@@ -1,56 +1,39 @@
 #container {
   text-align: center;
-  margin-top: 10%;
-  color: #4e342e; /* Tono café oscuro */
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-#container strong {
-  font-size: 22px;
-  line-height: 28px;
-  color: #3e2723; /* Café aún más oscuro para resaltar */
+ion-card {
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-title {
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 24px;
-  color: #795548; /* Tono café medio */
-  margin: 0;
+ion-card-content p {
+  font-size: 1rem;
+  color: #555;
 }
 
-#container a {
-  text-decoration: none;
-  color: #6d4c41; /* Tono café con un poco de calidez */
-  font-weight: bold;
-  transition: color 0.3s ease;
+.mensaje {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: green;
 }
 
-#container a:hover {
-  color: #5d4037; /* Oscurecer el tono al pasar el cursor */
+ion-button {
+  margin: 10px;
 }
-
-.info-box {
-  border: 1px solid #8d6e63; /* Café neutro para el borde */
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  margin-top: 5%;
-  margin-left: auto; /* Centrar automáticamente */
-  margin-right: auto; /* Centrar automáticamente */
-  width: 60%; /* Ajustar el tamaño */
-  background-color: #efebe9; /* Tono café muy claro para el fondo */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves para un diseño moderno */
+.boton-cafe {
+  --background: #d2b48c; /* Café claro */
+  --color: white; /* Texto en blanco */
+  --border-radius: 8px; /* Bordes redondeados */
 }
-
-.info {
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  margin-top: 16px;
-  margin-left: auto; /* Centrar automáticamente */
-  margin-right: auto; /* Centrar automáticamente */
-  width: 50%; /* Ajustar el tamaño */
-  background-color: #d7ccc8; /* Tono café claro */
-  color: #4e342e; /* Texto en café oscuro */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+.toolbar-cafe {
+  --background: #d2b48c; /* Café claro */
+  --color: white; /* Texto en blanco */
 }

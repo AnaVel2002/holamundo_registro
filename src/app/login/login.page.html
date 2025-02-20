@@ -14,12 +14,16 @@
     <ion-label position="floating">Password</ion-label>
     <ion-input [(ngModel)]="password" (ionInput)="validarCampos()" type="password"></ion-input>
   </ion-item>
-
-  <ion-button expand="full" (click)="mostrarModal()" [disabled]="!isValid" class="info" color="brown">
+  <ion-button expand="full" (click)="mostrarModal()" [disabled]="!isValid" class="boton-cafe">
     Mostrar Información
   </ion-button>
 
-  <ion-button expand="full" (click)="Iniciar()" [disabled]="!isValid" class="info" color="brown">
+  <!-- Nuevo botón para iniciar sesión -->
+  <ion-button expand="full" (click)="login()" [disabled]="!isValid" class="boton-cafe">
     Iniciar Sesión
+  </ion-button>
+
+  <ion-button expand="block" (click)="registro()" class="boton-cafe">
+    Ir a registro
   </ion-button>
 </ion-content>

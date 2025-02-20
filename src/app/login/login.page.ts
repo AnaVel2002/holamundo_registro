@@ -3,9 +3,13 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { InfoModalComponent } from '../info-modal/info-modal.component';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { InfoModalComponent } from '../info-modal/info-modal.component';
+import { FirebaseService } from '../services/firebase.service';
+import { User } from '../models/user.model';
+import { getAuth } from 'firebase/auth';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-login',
@@ -19,14 +23,31 @@ export class LoginPage {
   password: string = '';
   isValid: boolean = false;
 
-  constructor(private modalController: ModalController, private router: Router, private loadingController: LoadingController) {}
+  // Inyección del servicio a través del constructor
+  constructor(
+    private modalController: ModalController,
+    private router: Router,
+    private loadingController: LoadingController,
+    private firebaseSvc: FirebaseService
+  ) {}
+
+  ngOnInit() {
+    // Verifica si los datos del usuario están en localStorage
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
+    if (storedUser && storedToken) {
+      this.router.navigate(['/home']);
+    } 
+  }
 
   usuarios = [
-    {username: 'ana', password: '1234'}
+    { username: 'admin', password: 'admin' },
+    { username: 'ana', password: '1234' }
   ];
+
   validarCampos() {
     this.username = this.username.replace(/\s+/g, '').toLowerCase();
-    this.password = this.password.replace(/\s+/g, '');
+    this.password = this.password.replace(/\s+/g, ''); 
 
     this.isValid = this.username.length > 0 && this.password.length > 0;
   }
@@ -41,21 +62,55 @@ export class LoginPage {
     });
     return await modal.present();
   }
-// Author: Velázque Gutiérrez Ana Karen
-  Iniciar() {
-    const usuarioEncontrado = this.usuarios.find(user => 
-      user.username === this.username && user.password === this.password
-    );
+
+  async login() {
+    const user: User = {
+      uid: '',
+      email: this.username,
+      password: this.password,
+      username: '',
+      role: ''
+    };
+    try {
+      // Iniciar sesión
+      const res = await this.firebaseSvc.signIn(user);
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
   
-    if (usuarioEncontrado) {
-      this.presentLoading('Accediendo...', () => {
-        this.router.navigate(['/home']); // Redirige a Home
-      });
-    } else {
-      alert('Usuario o contraseña incorrectos');
+      if (currentUser) {
+        // Obtener el token
+        const token = await this.firebaseSvc.getToken();
+        if (token) {
+          localStorage.setItem('token', token);
+        }
+        console.log(currentUser.uid);
+        console.log(token);
+  
+        this.getUserInfo(res.user.uid);
+
+        // Mostrar loading y redirigir
+        await this.presentLoading('Accediendo...', () => {
+          this.router.navigate(['/home']);
+        });
+      }
+    } catch (error) {
+      console.error('Error en el login:', error);
+      // Mostrar mensaje de error al usuario
     }
   }
-//Author: Velázque Gutiérrez Ana Karen
+ 
+  async getUserInfo(uid: string) {
+        let path = `USERS/${uid}`;
+  
+        this.firebaseSvc.getUserData(path).then((user: User) => {
+          localStorage.setItem('user', JSON.stringify({
+            username: user['username'],
+            role: user['role'],
+            permissions: user['permissions']
+          }));
+        })
+    }
+  
   async presentLoading(mensaje: string, callback: Function) {
     const loading = await this.loadingController.create({
       message: mensaje,
@@ -63,6 +118,17 @@ export class LoginPage {
     });
     await loading.present();
     await loading.onDidDismiss();
-    callback();
+    callback(); // Ejecuta la función después del loading
+  }
+  
+  registro() {
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
+
+    if (storedUser && storedToken) {
+      console.log('Ya tienes una sesión activa. No puedes ir al registro.');
+      return; // Evita la navegación si ya está autenticado
+    }
+    this.router.navigate(['/register']);
   }
 }
